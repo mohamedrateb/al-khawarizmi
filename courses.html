@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الخوارزمي - الدورات</title>
+
+    <style>
+        /* -----------------------------------------
+           خلفية متناسقة مع الموقع (أسود + أخضر)
+        ------------------------------------------ */
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            color: white;
+
+            background: linear-gradient(160deg, #000000, #001800, #003300);
+            background-size: 200% 200%;
+            animation: bgMove 20s ease infinite;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes bgMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+
+        /* ----------------------------------------------------
+           🔥 فقاعات منتشرة بعرض الشاشة بالكامل وبعدد أكبر
+        ----------------------------------------------------- */
+
+        .circles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .circles li {
+            position: absolute;
+            display: block;
+            list-style: none;
+
+            /* أحجام مختلفة */
+            width: 15px;
+            height: 15px;
+            background: rgba(0, 255, 65, 0.10);
+            border-radius: 50%;
+            bottom: -160px;
+
+            animation: bubblesUp 18s linear infinite;
+        }
+
+        /* حركة الفقاعات */
+        @keyframes bubblesUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-1200px) scale(1.7);
+                opacity: 0;
+            }
+        }
+
+        /* توزيع عشوائي على كامل عرض الشاشة */
+        .circles li:nth-child(1) {
+            left: 3%;
+            animation-duration: 14s;
+            width: 22px;
+            height: 22px;
+        }
+
+        .circles li:nth-child(2) {
+            left: 10%;
+            animation-duration: 11s;
+            width: 18px;
+            height: 18px;
+        }
+
+        .circles li:nth-child(3) {
+            left: 18%;
+            animation-duration: 19s;
+            width: 25px;
+            height: 25px;
+        }
+
+        .circles li:nth-child(4) {
+            left: 26%;
+            animation-duration: 15s;
+        }
+
+        .circles li:nth-child(5) {
+            left: 33%;
+            animation-duration: 12s;
+            width: 28px;
+            height: 28px;
+        }
+
+        .circles li:nth-child(6) {
+            left: 40%;
+            animation-duration: 14s;
+            width: 20px;
+            height: 20px;
+        }
+
+        .circles li:nth-child(7) {
+            left: 48%;
+            animation-duration: 18s;
+        }
+
+        .circles li:nth-child(8) {
+            left: 55%;
+            animation-duration: 10s;
+            width: 30px;
+            height: 30px;
+        }
+
+        .circles li:nth-child(9) {
+            left: 63%;
+            animation-duration: 22s;
+        }
+
+        .circles li:nth-child(10) {
+            left: 70%;
+            animation-duration: 14s;
+        }
+
+        .circles li:nth-child(11) {
+            left: 78%;
+            animation-duration: 13s;
+            width: 24px;
+            height: 24px;
+        }
+
+        .circles li:nth-child(12) {
+            left: 86%;
+            animation-duration: 19s;
+        }
+
+        .circles li:nth-child(13) {
+            left: 94%;
+            animation-duration: 16s;
+            width: 26px;
+            height: 26px;
+        }
+
+        .circles li:nth-child(14) {
+            left: 50%;
+            animation-duration: 20s;
+            width: 16px;
+            height: 16px;
+        }
+
+        .circles li:nth-child(15) {
+            left: 22%;
+            animation-duration: 17s;
+            width: 21px;
+            height: 21px;
+        }
+
+
+        /* ----------------------------------------------------
+           الروبوت المتحرك
+        ----------------------------------------------------- */
+        .robot {
+            position: absolute;
+            width: 180px;
+            right: 30px;
+            bottom: 30px;
+            z-index: 3;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-14px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .robot {
+                width: 120px;
+                right: 12px;
+                bottom: 12px;
+            }
+        }
+
+
+        /* ----------------------------------------------------
+           الهيدر
+        ----------------------------------------------------- */
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 30, 0, 0.55);
+            backdrop-filter: blur(8px);
+            z-index: 10;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #00ff41;
+            font-weight: bold;
+            transition: .3s;
+        }
+
+        .navbar ul li a:hover {
+            color: #fff;
+            text-shadow: 0 0 8px #00ff41;
+        }
+
+
+        /* ----------------------------------------------------
+           الكورسات
+        ----------------------------------------------------- */
+
+        .courses {
+            padding: 130px 60px 60px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .courses h1 {
+            font-size: 3rem;
+            margin-bottom: 40px;
+            color: #00ff41;
+            text-shadow: 0 0 15px #00ff41;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .course-card {
+            background: rgba(0, 20, 0, 0.7);
+            border: 2px solid rgba(0, 255, 65, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            backdrop-filter: blur(4px);
+            transition: 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 25px rgba(0, 255, 65, 0.22);
+        }
+
+        .course-card h2 {
+            color: #00ff41;
+            margin-bottom: 15px;
+        }
+
+        .course-card a {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #00ff41;
+            color: #001a00;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        .course-card a:hover {
+            background: #00cc33;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- فقاعات كثيرة بعرض الصفحة كاملة -->
+    <ul class="circles" aria-hidden="true">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <!-- الروبوت المتحرك -->
+
+    <header>
+        <nav class="navbar">
+            <ul>
+                <h2>
+                    <li><a href="al-khawarizmi.html">al-khawarizmi</a></li>
+                </h2>
+                <li><a href="courses.html">الدورات</a></li>
+                <li><a href="books.html">الكتب</a></li>
+                <li><a href="contact.html">تواصل معنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="courses">
+        <h1>الدورات المتاحة</h1>
+
+        <div class="course-grid">
+
+            <div class="course-card">
+                <h2>أساسيات البرمجة</h2>
+                <p>تعلم المفاهيم الأساسية للبرمجة باستخدام Python و JavaScript، مع تطبيقات عملية.</p>
+                <a href="https://www.youtube.com/playlist?list=PLDoPjvoNmBAz7wegzgoJvVJdr-WwE5Pwt">ابدأ الآن</a>
+            </div>
+
+            <div class="course-card">
+                <h2>الذكاء الاصطناعي</h2>
+                <p>اكتشف تقنيات الذكاء الاصطناعي وتعلم كيفية بناء نماذج تعلم الآلة والشبكات العصبية.</p>
+                <a href="https://www.youtube.com/playlist?list=PLH0em1f_fBoT1xlF8F4bD2CQd--FZ3RR8">ابدأ الآن</a>
+            </div>
+
+            <div class="course-card">
+                <h2>أمن الشبكات</h2>
+                <p>تعرف على أساسيات أمن المعلومات وحماية الأنظمة من الهجمات الإلكترونية.</p>
+                <a href="#">ابدأ الآن</a>
+            </div>
+            <div class="course-card">
+                <h2>تطوير تطبيقات الويب</h2>
+                <p>تعلم بناء مواقع وتطبيقات ويب باستخدام HTML, CSS, JavaScript و React.</p>
+                <a href="#">ابدأ الآن</a>
+            </div>
+            <div class="course-card">
+                <h2>قواعد البيانات</h2>
+                <p>تعلم كيفية تصميم وإدارة قواعد البيانات باستخدام MySQL و MongoDB.</p>
+                <a href="#">ابدأ الآن</a>
+            </div>
+
+        </div>
+    </section>
+
+    <img src="AI_Robot.gif" class="robot" alt="روبوت تقني متحرك">
+
+</body>
+
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الخوارزمي - الكتب</title>
+
+    <style>
+        /* -----------------------------
+           خلفية + ألوان موقع الخوارزمي
+        --------------------------------*/
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(150deg, #000000, #001a00, #003300);
+            background-size: 200% 200%;
+            animation: bgMove 18s ease infinite;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        @keyframes bgMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* -----------------------------
+           فقاعات متناسقة مع الموقع
+        --------------------------------*/
+        .circles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .circles li {
+            position: absolute;
+            list-style: none;
+            display: block;
+            width: 15px;
+            height: 15px;
+            background: rgba(0, 255, 65, 0.08);
+            bottom: -120px;
+            border-radius: 50%;
+            animation: bubble 15s linear infinite;
+        }
+
+        @keyframes bubble {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-1100px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* توزيع */
+        .circles li:nth-child(1) {
+            left: 5%;
+            animation-duration: 14s;
+        }
+
+        .circles li:nth-child(2) {
+            left: 12%;
+            width: 20px;
+            height: 20px;
+            animation-duration: 11s;
+        }
+
+        .circles li:nth-child(3) {
+            left: 18%;
+            animation-duration: 17s;
+        }
+
+        .circles li:nth-child(4) {
+            left: 30%;
+            width: 25px;
+            height: 25px;
+            animation-duration: 13s;
+        }
+
+        .circles li:nth-child(5) {
+            left: 40%;
+            animation-duration: 18s;
+        }
+
+        .circles li:nth-child(6) {
+            left: 48%;
+            width: 20px;
+            height: 20px;
+            animation-duration: 16s;
+        }
+
+        .circles li:nth-child(7) {
+            left: 60%;
+            animation-duration: 12s;
+        }
+
+        .circles li:nth-child(8) {
+            left: 70%;
+            width: 26px;
+            height: 26px;
+            animation-duration: 20s;
+        }
+
+        .circles li:nth-child(9) {
+            left: 82%;
+            animation-duration: 14s;
+        }
+
+        .circles li:nth-child(10) {
+            left: 94%;
+            width: 22px;
+            height: 22px;
+            animation-duration: 15s;
+        }
+
+
+        /* -----------------------------
+           الهيدر
+        --------------------------------*/
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 18px 55px;
+            background: rgba(0, 30, 0, 0.55);
+            backdrop-filter: blur(8px);
+            z-index: 10;
+        }
+
+        .navbar ul {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            list-style: none;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #00ff41;
+            font-weight: bold;
+            transition: .3s;
+        }
+
+        .navbar ul li a:hover {
+            color: #fff;
+            text-shadow: 0 0 8px #00ff41;
+        }
+
+        /* -----------------------------
+           عنوان الصفحة
+        --------------------------------*/
+        .hero {
+            padding: 130px 30px 40px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 12px;
+            color: #00ff41;
+            text-shadow: 0 0 15px #00ff41;
+        }
+
+        .hero p {
+            color: #ccffdd;
+            font-size: 1.2rem;
+        }
+
+        /* -----------------------------
+           صندوق البحث + الفلاتر
+        --------------------------------*/
+        .search-box {
+            margin: 40px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .search-box input {
+            width: 90%;
+            padding: 14px 18px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            border: 2px solid #00ff41;
+            background: #001800;
+            color: #b4ffb4;
+            outline: none;
+            transition: .3s;
+        }
+
+        .search-box input:focus {
+            box-shadow: 0 0 12px #00ff41;
+            background: #002200;
+        }
+
+        .filters {
+            margin-top: 20px;
+        }
+
+        .filters button {
+            background: #003300;
+            color: #00ff41;
+            border: 1px solid #00ff41;
+            padding: 10px 18px;
+            margin: 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .filters button:hover {
+            background: #00ff41;
+            color: #003300;
+        }
+
+        /* -----------------------------
+           شبكة الكتب
+        --------------------------------*/
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 25px;
+            padding: 0 40px 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .book-card {
+            padding: 20px;
+            background: rgba(0, 20, 0, 0.7);
+            border: 2px solid rgba(0, 255, 65, 0.18);
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+            transition: .3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 0 18px rgba(0, 255, 65, 0.25);
+        }
+
+        .book-card h3 {
+            color: #00ff41;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .book-card p {
+            font-size: .9rem;
+            color: #cceccc;
+            line-height: 1.5;
+        }
+
+        .book-card a {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: #00ff41;
+            color: #002200;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: .3s;
+        }
+
+        .book-card a:hover {
+            background: #00cc33;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- فقاعات -->
+    <ul class="circles" aria-hidden="true">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+
+    <!-- الهيدر -->
+    <header>
+        <nav class="navbar">
+            <ul>
+                <h2>
+                    <li><a href="al-khawarizmi.html">al-khawarizmi</a></li>
+                </h2>
+                <li><a href="courses.html">الدورات</a></li>
+                <li><a href="books.html">الكتب</a></li>
+                <li><a href="contact.html">تواصل معنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- العنوان -->
+    <div class="hero">
+        <h1>مكتبة الخوارزمي</h1>
+        <p>اكتشف أفضل الكتب المتخصصة في البرمجة، الذكاء الاصطناعي، الشبكات، وقواعد البيانات.</p>
+    </div>
+
+    <!-- البحث -->
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="ابحث عن كتاب...">
+        <div class="filters">
+            <button onclick="filterCategory('all')">الكل</button>
+            <button onclick="filterCategory('programming')">البرمجة</button>
+            <button onclick="filterCategory('ai')">الذكاء الاصطناعي</button>
+            <button onclick="filterCategory('networks')">الشبكات</button>
+            <button onclick="filterCategory('db')">قواعد البيانات</button>
+        </div>
+    </div>
+
+    <!-- شبكة الكتب -->
+    <div class="books-grid" id="booksGrid">
+
+        <!-- مثال كتب (عدّل أو أضف زي ما تحب) -->
+
+        <div class="book-card" data-category="programming">
+            <h3>تعلم Python خطوة بخطوة</h3>
+            <p>كتاب شامل لتعلم أساسيات البرمجة بلغة بايثون مع أمثلة عملية.</p>
+            <a href="https://academy.hsoub.com/files/15-%D8%A7%D9%84%D8%A8%D8%B1%D9%85%D8%AC%D8%A9-%D8%A8%D9%84%D8%BA%D8%A9-%D8%A8%D8%A7%D9%8A%D8%AB%D9%88%D9%86/">تحميل</a>
+        </div>
+
+        <div class="book-card" data-category="ai">
+            <h3>مدخل إلى الذكاء الاصطناعي</h3>
+            <p>مقدمة قوية لفهم تعلم الآلة والشبكات العصبية.</p>
+            <a href="https://academy.hsoub.com/files/17-%D9%85%D8%AF%D8%AE%D9%84-%D8%A5%D9%84%D9%89-%D8%A7%D9%84%D8%B0%D9%83%D8%A7%D8%A1-%D8%A7%D9%84%D8%A7%D8%B5%D8%B7%D9%86%D8%A7%D8%B9%D9%8A-%D9%88%D8%AA%D8%B9%D9%84%D9%85-%D8%A7%D9%84%D8%A2%D9%84%D8%A9/">تحميل</a>
+        </div>
+
+        <div class="book-card" data-category="networks">
+            <h3>أساسيات أمن الشبكات</h3>
+            <p>كتاب يشرح حماية الأنظمة وتقنيات الدفاع عن الشبكات.</p>
+            <a href="#">تحميل</a>
+        </div>
+
+        <div class="book-card" data-category="db">
+            <h3>قواعد البيانات باستخدام MySQL</h3>
+            <p>تعلم كيفية إدارة وتصميم قواعد البيانات.</p>
+            <a href="#">تحميل</a>
+        </div>
+
+        <div class="book-card" data-category="programming">
+            <h3>أساسيات JavaScript</h3>
+            <p>مدخل لتعلم لغة جافاسكريبت لبناء واجهات الويب.</p>
+            <a href="#">تحميل</a>
+        </div>
+
+    </div>
+
+
+    <!-- سكربت البحث + الفلاتر -->
+    <script>
+
+        function filterCategory(cat) {
+            let books = document.querySelectorAll(".book-card");
+            books.forEach(book => {
+                if (cat === "all" || book.dataset.category === cat) {
+                    book.style.display = "block";
+                } else {
+                    book.style.display = "none";
+                }
+            });
+        }
+
+        document.getElementById("searchInput").addEventListener("keyup", function () {
+            let q = this.value.toLowerCase();
+            let books = document.querySelectorAll(".book-card");
+            books.forEach(book => {
+                let txt = book.innerText.toLowerCase();
+                book.style.display = txt.includes(q) ? "block" : "none";
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>
